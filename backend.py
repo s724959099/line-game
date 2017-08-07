@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/", methods=['POST', "GET"])
 def index():
     channel_access_token = os.environ.get("channel_access_token", "YOUR_CHANNEL_ACCESS_TOKEN")
-    channel_secret = os.environ.get("channel_secre", "YOUR_CHANNEL_SECRET")
+    channel_secret = os.environ.get("channel_secret", "YOUR_CHANNEL_SECRET")
     print("toke=",channel_access_token)
     print("channel_secret=", channel_secret)
     return "Text"
