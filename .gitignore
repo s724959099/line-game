@@ -1,0 +1,5 @@
+# 忽略文件
+__pycache__
+.idea
+*.map
+.DS_Store
