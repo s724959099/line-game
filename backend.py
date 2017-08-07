@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 @app.route("/", methods=['POST', "GET"])
 def index():
+    app.logger.info("test~~~~ logger")
+    print("print~~~~~")
     return "Text"
 
 
