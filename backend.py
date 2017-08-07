@@ -8,24 +8,26 @@ app = Flask(__name__)
 def index():
     channel_access_token = os.environ.get("channel_access_token", "YOUR_CHANNEL_ACCESS_TOKEN")
     channel_secret = os.environ.get("channel_secret", "YOUR_CHANNEL_SECRET")
-    print("toke=",channel_access_token)
+    print("toke=", channel_access_token)
     print("channel_secret=", channel_secret)
     return "Text"
 
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
-
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
-
-    # handle webhook body
     try:
+        # get X-Line-Signature header value
+        signature = request.headers['X-Line-Signature']
+
+        # get request body as text
+        body = request.get_data(as_text=True)
+        app.logger.info("Request body: " + body)
+
+        # handle webhook body
+
         handler.handle(body, signature)
-    except InvalidSignatureError:
+    except Exception as e:
+        print(str(e))
         abort(400)
 
     return 'OK'
