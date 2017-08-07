@@ -3,9 +3,11 @@ from linebot_commands import *
 
 app = Flask(__name__)
 
-@app.route("/", methods=['POST'])
+
+@app.route("/", methods=['POST', "GET"])
 def index():
     return "Text"
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
