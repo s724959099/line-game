@@ -6,7 +6,7 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSen
 from utli.commands import Invoker, SimpleCommandFactory
 
 channel_access_token = os.environ.get("channel_access_token", "YOUR_CHANNEL_ACCESS_TOKEN")
-channel_secret = os.environ.get("channel_secre", "YOUR_CHANNEL_SECRET")
+channel_secret = os.environ.get("channel_secret", "YOUR_CHANNEL_SECRET")
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
