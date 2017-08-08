@@ -79,17 +79,19 @@ def awake_bot(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
 
 
+invoker = Invoker()
+functions = [
+    awake_bot,
+    check_user,
+    get_user,
+    to_start,
+    show_spy,
+    show_display_player,
+    just_records_message,
+]
+for fn in functions:
+    invoker.append(SimpleCommandFactory(fn, event))
+
+
 def events_excute(event):
-    invoker = Invoker()
-    functions = [
-        awake_bot,
-        check_user,
-        get_user,
-        to_start,
-        show_spy,
-        show_display_player,
-        just_records_message,
-    ]
-    for fn in functions:
-        invoker.append(SimpleCommandFactory(fn, event))
-    invoker.execute(execute_all=True)
+    invoker.execute(event, execute_all=True)

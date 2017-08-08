@@ -13,7 +13,7 @@ class SimpleCommandFactory(Command):
         self.__kwargs = kwargs
 
     def execute(self):
-        self.__fn(*self.__args, **self.__kwargs)
+        return self.__fn
 
 
 class Invoker:
@@ -38,23 +38,23 @@ class Invoker:
                 yield command
             self.__index += 0
 
-    def execute(self, execute_all=False):
-        self.base_command(self.name_type[1], execute_all=execute_all)
+    def execute(self, event, execute_all=False):
+        self.base_command(self.name_type[1], event, execute_all=execute_all)
 
     def undo(self, execute_all=False):
-        self.base_command(self.name_type[2], execute_all=execute_all)
+        self.base_command(self.name_type[2], event, execute_all=execute_all)
 
-    def base_command(self, name, execute_all=False):
+    def base_command(self, name, event, execute_all=False):
         cond1 = self.__index >= len(self.commands) and name is "execute"
         cond2 = self.__index < 0 and name is "undo"
         if cond1 or cond2:
             return False
         if execute_all:
             for command in self.for_loop(name):
-                getattr(command, name)()
+                getattr(command, name)(event)
         else:
             command = self.commands[self.__index]
-            getattr(command, name)()
+            getattr(command, name)(event)
 
             if name is "execute":
                 self.__index += 1
