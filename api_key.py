@@ -1,2 +1,0 @@
-channel_access_token = "6U4G3vrTUfZqGNfx3g2ocfHzcmAeb5uSBAe/yGf3zxUOKV/imyfmfM8yDtrslYH7+pCYpdzvCzH7FcBmY28xq9oTBdyNoOJD2US7J09PIsgdmsDZnq5I60kdY122YjbSfVjALpL7NJ7FJkdwaucvTQdB04t89/1O/w1cDnyilFU="
-channel_secret = "4704db3478377bddefa220b1c3142886"
