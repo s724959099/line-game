@@ -90,7 +90,7 @@ functions = [
     just_records_message,
 ]
 for fn in functions:
-    invoker.append(SimpleCommandFactory(fn, event))
+    invoker.append(SimpleCommandFactory(fn))
 
 
 def events_excute(event):
