@@ -18,7 +18,6 @@ line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
 
-
 class LineAPI:
     def __init__(self, event):
         self.event = event

@@ -57,7 +57,7 @@ class SpyGame:
 
     def play(self, line):
         if self.room is None:
-            return False
+            line.reply(text("room 不知道為啥不見了oops"))
         print("user count=", len(self.room.users))
         user_count = len(self.room.users)
         spy_count = int(user_count / 3)
