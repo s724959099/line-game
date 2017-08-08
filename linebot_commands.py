@@ -78,8 +78,7 @@ def awake_bot(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
 
 
-invoker = Invoker()
-functions = [
+commands = [
     awake_bot,
     check_user,
     get_user,
@@ -88,9 +87,8 @@ functions = [
     show_display_player,
     just_records_message,
 ]
-for fn in functions:
-    invoker.append(SimpleCommandFactory(fn))
 
 
 def events_excute(event):
-    invoker.execute(event, execute_all=True)
+    for cmd in commands:
+        cmd(event)
