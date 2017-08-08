@@ -37,7 +37,8 @@ def to_start(event):
 def get_user(event):
     if event.message.text.lower() == "我" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
-        game.append_user(event.source.group_id, event.source.user_id)
+        line = LineAPI(event)
+        game.append_user(event.source.group_id, event.source.user_id,line)
 
 
 def check_user(event):

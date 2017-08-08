@@ -7,10 +7,11 @@ class GameRoom:
         self.group_id = group_id
         self.users = []
 
-    def append_user(self, user_id):
+    def append_user(self, user_id,line):
         if self.in_users(user_id):
             return False
         self.users.append(user_id)
+        line.reply(text("目前人數為＝{}".format(len(self.users))))
         return True
 
     def in_users(self, user_id):
@@ -98,11 +99,11 @@ class GameGroups:
         self.rooms.append(GameRoom(group_id))
         return True
 
-    def append_user(self, group_id, user_id):
+    def append_user(self, group_id, user_id,line):
         def wrapper(room):
             if user_id is None:
                 return False
-            return room.append_user(user_id)
+            return room.append_user(user_id,line)
 
         return self.__search_group(group_id, wrapper)
 
