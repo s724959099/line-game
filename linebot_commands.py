@@ -90,5 +90,7 @@ commands = [
 
 
 def events_excute(event):
-    for cmd in commands:
-        cmd(event)
+    line = LineAPI(event)
+    line.reply(text("test"))
+    # for cmd in commands:
+    #     cmd(event)
