@@ -17,6 +17,7 @@ def just_records_message(event):
         message += profile.status_message + "\n"
         message += "-" * 10
         line.reply(text(message))
+        return True
 
 
 def show_spy(event):
@@ -30,8 +31,7 @@ def show_display_player(event):
     if event.message.text.lower() == "遊戲人數" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
         line = LineAPI(event)
-        line.reply(text("i got it"))
-        # game.show_display_player(event.source.group_id, line)
+        game.show_display_player(event.source.group_id, line)
 
 
 def to_start(event):
@@ -90,7 +90,6 @@ commands = [
 
 
 def events_excute(event):
-    line = LineAPI(event)
-    line.reply(text("test"))
-    # for cmd in commands:
-    #     cmd(event)
+    for cmd in commands:
+        cmd(event)
+        # print(cmd.__name__)

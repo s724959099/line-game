@@ -27,6 +27,8 @@ class LineAPI:
         self.user_id = event.source.user_id
 
     def reply(self, msg):
+        if isinstance(msg, str):
+            msg = text(msg)
         self.line_bot_api.reply_message(self.event.reply_token, msg)
 
     def push(self, user_id, msg):
@@ -44,11 +46,6 @@ class LineAPI:
 
     def get_profile(self, user_id):
         profile = line_bot_api.get_profile(user_id)
-
-        print(profile.display_name)
-        print(profile.user_id)
-        print(profile.picture_url)
-        print(profile.status_message)
         return profile
 
 
