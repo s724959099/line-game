@@ -31,7 +31,8 @@ def show_display_player(event):
     if event.message.text.lower() == "遊戲人數" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
         line = LineAPI(event)
-        game.show_display_player(event.source.group_id, line)
+        line.reply(text("i got it"))
+        # game.show_display_player(event.source.group_id, line)
 
 
 def to_start(event):
