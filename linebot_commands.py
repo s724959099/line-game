@@ -16,7 +16,6 @@ def just_records_message(event):
         message += profile.picture_url + "\n"
         message += profile.status_message + "\n"
         message += "-" * 10
-
         line.reply(text(message))
 
 

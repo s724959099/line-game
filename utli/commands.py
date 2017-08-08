@@ -12,8 +12,8 @@ class SimpleCommandFactory(Command):
         self.__args = args
         self.__kwargs = kwargs
 
-    def execute(self):
-        return self.__fn
+    def execute(self, event):
+        return self.__fn(event)
 
 
 class Invoker:
