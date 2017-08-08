@@ -5,8 +5,15 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSen
                             TemplateSendMessage, ButtonsTemplate, MessageTemplateAction, URITemplateAction)
 from utli.commands import Invoker, SimpleCommandFactory
 
-channel_access_token = os.environ.get("channel_access_token", "YOUR_CHANNEL_ACCESS_TOKEN")
-channel_secret = os.environ.get("channel_secret", "YOUR_CHANNEL_SECRET")
+try:
+    import api_key
+
+    channel_access_token = api_key.channel_access_token
+    channel_secret = api_key.channel_secret
+except Exception as e:
+    channel_access_token = os.environ.get("channel_access_token", "YOUR_CHANNEL_ACCESS_TOKEN")
+    channel_secret = os.environ.get("channel_secret", "YOUR_CHANNEL_SECRET")
+
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
