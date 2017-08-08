@@ -7,13 +7,22 @@ class Command:
 
 
 class SimpleCommandFactory(Command):
-    def __init__(self, func, *args, **kwargs):
+    def __init__(self, func, trigger_text, only_group=True, no_if=False):
         self.__fn = func
-        self.__args = args
-        self.__kwargs = kwargs
+        self.__text = trigger_text
+        if isinstance(self.__text, str):
+            self.__text = [self.__text]
+        self.__only_group = only_group
+        self.__no_if = no_if
 
-    def execute(self):
-        self.__fn(*self.__args, **self.__kwargs)
+    def execute(self, *args, **kwargs):
+        line = kwargs["line"]
+        event = kwargs["event"]
+        if self.__no_if:
+            self.__fn(*args, **kwargs)
+        elif event.message.text.lower() in self.__text:
+            if not self.__only_group or event.source.type == "group":
+                self.__fn(*args, **kwargs)
 
 
 class Invoker:
@@ -28,6 +37,14 @@ class Invoker:
     def append(self, command):
         self.commands.append(command)
 
+    def appends(self, commands):
+        for command in commands:
+            self.commands.append(command)
+
+    def appends_factory(self, commands):
+        for command in commands:
+            self.commands.append(SimpleCommandFactory(command))
+
     def for_loop(self, execute_type="execute"):
         if execute_type is "execute":
             for command in self.commands[self.__index:]:
@@ -38,23 +55,23 @@ class Invoker:
                 yield command
             self.__index += 0
 
-    def execute(self, execute_all=False):
-        self.base_command(self.name_type[1], execute_all=execute_all)
+    def execute(self, execute_all=False, *args, **kwargs):
+        self.base_command(self.name_type[1], execute_all=execute_all, *args, **kwargs)
 
-    def undo(self, execute_all=False):
-        self.base_command(self.name_type[2], execute_all=execute_all)
+    def undo(self, execute_all=False, *args, **kwargs):
+        self.base_command(self.name_type[2], execute_all=execute_all, *args, **kwargs)
 
-    def base_command(self, name, execute_all=False):
+    def base_command(self, name, execute_all=False, *args, **kwargs):
         cond1 = self.__index >= len(self.commands) and name is "execute"
         cond2 = self.__index < 0 and name is "undo"
         if cond1 or cond2:
             return False
         if execute_all:
             for command in self.for_loop(name):
-                getattr(command, name)()
+                getattr(command, name)(*args, **kwargs)
         else:
             command = self.commands[self.__index]
-            getattr(command, name)()
+            getattr(command, name)(*args, **kwargs)
 
             if name is "execute":
                 self.__index += 1

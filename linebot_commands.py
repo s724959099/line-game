@@ -1,14 +1,14 @@
 from game_enviroment import *
+from line_api import *
 
 test = []
 
 game = GameGroups(SpyGame)
 
 
-def just_records_message(event):
+def just_records_message(line, event):
     """未來可以紀錄user 所有的message 現在先拿來測試用"""
     if event.message.text.lower() == "test":
-        line = LineAPI(event)
         profile = line.get_profile(event.source.user_id)
         message = "user_id={}\n".format(event.source.user_id)
         message += profile.display_name + "\n"
@@ -20,38 +20,33 @@ def just_records_message(event):
         return True
 
 
-def show_spy(event):
+def show_spy(line, event):
     if event.message.text.lower() == "間諜現身" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
-        line = LineAPI(event)
         game.show_spy(event.source.group_id, line)
 
 
-def show_display_player(event):
+def show_display_player(line, event):
     if event.message.text.lower() == "遊戲人數" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
-        line = LineAPI(event)
         game.show_display_player(event.source.group_id, line)
 
 
-def to_start(event):
+def to_start(line, event):
     if event.message.text.lower() == "好了" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
-        line = LineAPI(event)
         game.play(event.source.group_id, line)
 
 
-def get_user(event):
+def get_user(line, event):
     if event.message.text.lower() == "我" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
-        line = LineAPI(event)
         game.append_user(event.source.group_id, event.source.user_id, line)
 
 
-def check_user(event):
+def check_user(line, event):
     if event.message.text.lower() == "開始玩" and event.source.type == "group":
         game.append_group(event.source.group_id)
-        line = LineAPI(event)
         content = """Hi ~我是Q醬
 如果你要參與遊戲請說："我"
 人數確定請跟我說:"好了"
@@ -59,7 +54,7 @@ def check_user(event):
         line.reply(template("間諜遊戲", content, ["我", "好了", "間諜現身"]))
 
 
-def awake_bot(event):
+def awake_bot(line, event):
     if event.message.text.lower() == "q bot":
         buttons_template = TemplateSendMessage(
             alt_text='目錄 template',
@@ -79,17 +74,18 @@ def awake_bot(event):
 
 
 commands = [
-    awake_bot,
-    check_user,
-    get_user,
-    to_start,
-    show_spy,
-    show_display_player,
-    just_records_message,
+    SimpleCommandFactory(awake_bot, "q bot"),
+    SimpleCommandFactory(check_user, "開始玩"),
+    SimpleCommandFactory(get_user, "我"),
+    SimpleCommandFactory(to_start, "好了"),
+    SimpleCommandFactory(show_spy, "間諜現身"),
+    SimpleCommandFactory(show_display_player, "遊戲人數"),
+    SimpleCommandFactory(just_records_message, "test"),
 ]
+invoker = Invoker()
+invoker.appends(commands)
 
 
 def events_excute(event):
-    for cmd in commands:
-        cmd(event)
-        # print(cmd.__name__)
+    line = LineAPI(event)
+    invoker.execute(execute_all=True, event=event, line=line)

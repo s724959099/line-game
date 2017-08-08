@@ -4,3 +4,4 @@ __pycache__
 *.map
 .DS_Store
 api_key.py
+test_file/*
