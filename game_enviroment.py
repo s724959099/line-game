@@ -7,7 +7,7 @@ class GameRoom:
         self.group_id = group_id
         self.users = []
 
-    def append_user(self, user_id,line):
+    def append_user(self, user_id, line):
         if self.in_users(user_id):
             return False
         self.users.append(user_id)
@@ -19,6 +19,14 @@ class GameRoom:
             if item == user_id:
                 return True
         return False
+
+    def show_game_player(self, line):
+        message = "遊戲人數為: {}\n".format(len(self.users))
+        message += "-" * 20 + "\n"
+        for item in self.users:
+            profile = line.get_profile(item)
+            message += "{} \n".format(profile.display_name)
+        line.reply(text(message))
 
 
 class SpyGame:
@@ -99,11 +107,11 @@ class GameGroups:
         self.rooms.append(GameRoom(group_id))
         return True
 
-    def append_user(self, group_id, user_id,line):
+    def append_user(self, group_id, user_id, line):
         def wrapper(room):
             if user_id is None:
                 return False
-            return room.append_user(user_id,line)
+            return room.append_user(user_id, line)
 
         return self.__search_group(group_id, wrapper)
 
@@ -133,5 +141,11 @@ class GameGroups:
         def wrapper(room):
             self.game.room = room
             return self.game.show_spy(line)
+
+        return self.__search_group(group_id, wrapper)
+
+    def show_display_player(self, group_id, line):
+        def wrapper(room):
+            room.show_game_player(line)
 
         return self.__search_group(group_id, wrapper)

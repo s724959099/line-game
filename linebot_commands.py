@@ -27,6 +27,13 @@ def show_spy(event):
         game.show_spy(event.source.group_id, line)
 
 
+def show_display_player(event):
+    if event.message.text.lower() == "遊戲人數" and event.source.type == "group" \
+            and game.in_group(event.source.group_id):
+        line = LineAPI(event)
+        game.show_display_player(event.source.group_id, line)
+
+
 def to_start(event):
     if event.message.text.lower() == "好了" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
@@ -38,7 +45,7 @@ def get_user(event):
     if event.message.text.lower() == "我" and event.source.type == "group" \
             and game.in_group(event.source.group_id):
         line = LineAPI(event)
-        game.append_user(event.source.group_id, event.source.user_id,line)
+        game.append_user(event.source.group_id, event.source.user_id, line)
 
 
 def check_user(event):
@@ -49,7 +56,7 @@ def check_user(event):
 如果你要參與遊戲請說："我"
 人數確定請跟我說:"好了"
 要參與的人有誰呢？"""
-        line.reply(template("間諜遊戲",content, ["我", "好了", "間諜現身"]))
+        line.reply(template("間諜遊戲", content, ["我", "好了", "間諜現身"]))
 
 
 def awake_bot(event):
@@ -79,6 +86,7 @@ def events_excute(event):
         get_user,
         to_start,
         show_spy,
+        show_display_player,
         just_records_message,
     ]
     for fn in functions:
