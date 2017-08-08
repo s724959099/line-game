@@ -57,7 +57,7 @@ class SpyGame:
     def play(self, line):
         if self.room is None:
             return False
-
+        print("user count=", len(self.room.users))
         user_count = len(self.room.users)
         spy_count = int(user_count / 3)
         if spy_count == 0:
@@ -65,7 +65,7 @@ class SpyGame:
         self.room.spy_users = []
         for i in range(spy_count):
             self.picker_spy()
-        print("user count=", len(self.room.users))
+
         picker_position = random.choice(self.postion_images)
         self.show_position(line)
         for user in self.room.users:
