@@ -52,7 +52,9 @@ class GameDB:
 
     def append_group(self, group_id):
         if self.in_group(group_id):
+            print("in group")
             return False
+        print("append")
         self.rooms.append(GameRoom(group_id))
         return True
 
