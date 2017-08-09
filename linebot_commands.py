@@ -16,7 +16,11 @@ invoker = Invoker()
 invoker.appends(commands)
 game = GameDB.get_instance()
 
+a = []
+
 
 def events_excute(event):
     line = LineAPI(event)
-    invoker.execute(execute_all=True, event=event, line=line, game_db=game)
+    line.reply("a lne={}".format(len(a)))
+    a.append(1)
+    # invoker.execute(execute_all=True, event=event, line=line, game_db=game)
