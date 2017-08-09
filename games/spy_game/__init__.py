@@ -19,8 +19,10 @@ def init_game(line, event, game_db):
                 "遊戲人數",
             ]
         ))
+        # line.reply("debugger 中 in group init game")
     else:
-        awake_bot(line, event, game_db)
+        line.reply("debugger 中 有什麼原因無法init")
+        # awake_bot(line, event, game_db)
 
 
 def show_spy(line, event, game_db):

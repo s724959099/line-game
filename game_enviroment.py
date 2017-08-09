@@ -53,7 +53,10 @@ class GameDB:
                 return fn(room)
 
     def in_group(self, group_id):
-        return self.__search_group(group_id, lambda room: True)
+        def wrapper(room):
+            return True if room else False
+
+        return self.__search_group(group_id, wrapper)
 
     def play(self, group_id, line, game):
         def wrapper(room):
