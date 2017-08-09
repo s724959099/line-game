@@ -9,11 +9,12 @@ add_list = [
 ]
 
 commands = []
+print("linebot commands")
 for cmd in add_list:
     commands.extend(cmd.commands())
 invoker = Invoker()
 invoker.appends(commands)
-game = GameDB()
+game = GameDB.get_instance()
 
 
 def events_excute(event):

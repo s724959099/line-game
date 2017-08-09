@@ -30,7 +30,18 @@ class GameRoom:
             message += "{} \n".format(profile.display_name)
         line.reply(message)
 
-class GameDB:
+
+class Singleton:
+    __singleton = None
+
+    @classmethod
+    def get_instance(cls):
+        if not isinstance(cls.__singleton, cls):
+            cls.__singleton = cls()
+        return cls.__singleton
+
+
+class GameDB(Singleton):
     def __init__(self):
         print("game db init=")
         self.rooms = []
