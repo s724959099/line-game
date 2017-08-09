@@ -33,7 +33,6 @@ class GameRoom:
 class GameDB:
     def __init__(self):
         print("game db init=")
-        db_index += 1
         self.rooms = []
 
     def debugger_rooms(self, line):
