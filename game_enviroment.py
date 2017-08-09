@@ -35,7 +35,7 @@ class GameDB:
         self.rooms = []
 
     def debugger_rooms(self, line):
-        msg = ""
+        msg = "room len={}\n".format(self.rooms)
         index = 0
         for room in self.rooms:
             temp_dict = room.__dict__
@@ -47,7 +47,7 @@ class GameDB:
                 del temp_dict["game"]
             msg += "room{}: ".format(index) + json.dumps(temp_dict) + "\n"
             index += 1
-        print("msg=",msg)
+        print("msg=", msg)
         line.reply(msg)
 
     def append_group(self, group_id):
