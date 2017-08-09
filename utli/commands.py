@@ -16,13 +16,14 @@ class SimpleCommandFactory(Command):
         self.__no_if = no_if
 
     def execute(self, *args, **kwargs):
-        line = kwargs["line"]
         event = kwargs["event"]
         if self.__no_if:
             self.__fn(*args, **kwargs)
+            print("fn name=", self.__fn.__name__)
         elif event.message.text.lower() in self.__text:
             if not self.__only_group or event.source.type == "group":
                 self.__fn(*args, **kwargs)
+                print("fn name=", self.__fn.__name__)
 
 
 class Invoker:
@@ -67,7 +68,7 @@ class Invoker:
         if cond1 or cond2:
             return False
         if execute_all:
-            for command in self.for_loop(name):
+            for command in self.commands:
                 getattr(command, name)(*args, **kwargs)
         else:
             command = self.commands[self.__index]

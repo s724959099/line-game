@@ -28,11 +28,13 @@ class LineAPI:
 
     def reply(self, msg):
         if isinstance(msg, str):
-            msg = text(msg)
+            msg = text_message(msg)
         self.line_bot_api.reply_message(self.event.reply_token, msg)
 
     def push(self, user_id, msg):
         try:
+            if isinstance(msg, str):
+                msg = text_message(msg)
             self.line_bot_api.push_message(user_id, msg)
         except Exception as e:
             print("done")
@@ -45,34 +47,48 @@ class LineAPI:
             self.reply(template(title, text, pop))
 
     def get_profile(self, user_id):
+        """
+        profile.display_name
+        profile.user_id
+        profile.picture_url
+        profile.status_message
+        :param user_id:
+        :return:
+        """
         profile = line_bot_api.get_profile(user_id)
         return profile
 
 
-def template(title, text, messages):
+def base_template(title, msg,url, messages):
     actions = []
     for message in messages:
-        actions.append(MessageTemplateAction(
-            label=message,
-            text=message
-        ))
+        if isinstance(message, str):
+            actions.append(MessageTemplateAction(
+                label=message,
+                text=message
+            ))
+        else:
+            actions.append(URITemplateAction(
+                label=message[0],
+                uri=message[1]
+            ))
     buttons_template = TemplateSendMessage(
         alt_text='目錄 template',
         template=ButtonsTemplate(
             title=title,
-            text=text,
-            thumbnail_image_url='https://i.imgur.com/K9R7i8R.jpg',
+            text=msg,
+            thumbnail_image_url=url,
             actions=actions
         )
     )
     return buttons_template
 
 
-def text(content):
+def text_message(content):
     return TextSendMessage(text=content)
 
 
-def image(url):
+def image_message(url):
     return ImageSendMessage(
         original_content_url=url,
         preview_image_url=url
