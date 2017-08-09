@@ -47,7 +47,7 @@ class GameDB:
                 del temp_dict["game"]
             msg += "room{}: ".format(index) + json.dumps(temp_dict) + "\n"
             index += 1
-
+        print("msg=",msg)
         line.reply(msg)
 
     def append_group(self, group_id):
