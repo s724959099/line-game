@@ -30,7 +30,7 @@ class GameRoom:
             message += "{} \n".format(profile.display_name)
         line.reply(message)
 
-
+temp=1
 db_index = 0
 
 
