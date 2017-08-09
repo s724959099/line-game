@@ -26,7 +26,7 @@ class GameRoom:
         message += "-" * 20 + "\n"
         for profile in self.users:
             message += "{} \n".format(profile.display_name)
-        line.reply(text(message))
+        line.reply(message)
 
 
 class GameDB:
