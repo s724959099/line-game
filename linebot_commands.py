@@ -33,12 +33,10 @@ def read_json():
     except:
         return {}
 
-print("Aa")
+a=[]
 def events_excute(event):
     line = LineAPI(event)
-    db = read_json()
-    db.setdefault("a", [])
-    line.reply("len={}".format(db["a"]))
-    db["a"].append(1)
-    write_json(db)
+
+    line.reply("len={}".format(a))
+    a.append()
     # invoker.execute(execute_all=True, event=event, line=line, game_db=game)
