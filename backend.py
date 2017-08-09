@@ -33,6 +33,7 @@ def callback():
 def handle_message(event):
     events_excute(event)
 
+print("backend")
 
 if __name__ == "__main__":
     app.run(port=7000, debug=True)

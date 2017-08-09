@@ -1,5 +1,6 @@
 import json
 from line_api import *
+from utli import db
 
 
 class GameRoom:
@@ -43,7 +44,6 @@ class Singleton:
 
 class GameDB(Singleton):
     def __init__(self):
-        print("game db init=")
         self.rooms = []
 
     def debugger_rooms(self, line):
