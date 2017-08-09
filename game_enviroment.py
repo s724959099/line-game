@@ -30,13 +30,9 @@ class GameRoom:
             message += "{} \n".format(profile.display_name)
         line.reply(message)
 
-temp=1
-db_index = 0
-
-
 class GameDB:
     def __init__(self):
-        print("game db init=", db_index)
+        print("game db init=")
         db_index += 1
         self.rooms = []
 
