@@ -33,7 +33,7 @@ def read_json():
     except:
         return {}
 
-
+print("Aa")
 def events_excute(event):
     line = LineAPI(event)
     db = read_json()
