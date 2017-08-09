@@ -9,7 +9,9 @@ def template(title, msg, messages):
 
 def init_game(line, event, game_db):
     try:
+        print("ready it")
         if game_db.in_group(event.source.group_id):
+            print("if it")
             game_db.get_room(event.source.group_id).game = SpyGame()
             line.reply(template(
                 "遊戲建立中",
@@ -22,6 +24,7 @@ def init_game(line, event, game_db):
             ))
             # line.reply("debugger 中 in group init game")
         else:
+            print("else it")
             game_db.debugger_rooms(line)
             # awake_bot(line, event, game_db)
     except Exception as e:
