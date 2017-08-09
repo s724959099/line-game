@@ -9,10 +9,9 @@ def template(title, msg, messages):
 
 def init_game(line, event, game_db):
     try:
-        print("ready it")
         if game_db.in_group(event.source.group_id):
-            print("if it")
             game_db.get_room(event.source.group_id).game = SpyGame()
+            print("get spy game")
             line.reply(template(
                 "遊戲建立中",
                 "參加玩家回答完後回答好了即可開始",
