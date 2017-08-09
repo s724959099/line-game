@@ -28,7 +28,7 @@ def init_game(line, event, game_db):
             game_db.debugger_rooms(line)
             # awake_bot(line, event, game_db)
     except Exception as e:
-        line.reply(str(e))
+        line.push(event.source.group_id, str(e))
 
 
 def show_spy(line, event, game_db):
