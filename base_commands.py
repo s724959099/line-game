@@ -26,7 +26,8 @@ def show_game_player(line, event, game_db):
         room = game_db.get_room(event.source.group_id)
         room.show_game_player(line)
     else:
-        awake_bot(line, event, game_db)
+        game_db.debugger_rooms(line)
+        # awake_bot(line, event, game_db)
 
 
 def append_group(line, event, game_db):

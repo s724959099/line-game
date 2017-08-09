@@ -33,6 +33,18 @@ class GameDB:
     def __init__(self):
         self.rooms = []
 
+    def debugger_rooms(self, line):
+        msg = ""
+        for room in self.rooms:
+            temp_dict = room.__dict__
+            arr = []
+            for user in room.users:
+                arr.append(user.__dict__)
+            temp_dict["users"] = arr
+            msg += temp_dict + "\n"
+
+        line.reply(msg)
+
     def append_group(self, group_id):
         if self.in_group(group_id):
             return False

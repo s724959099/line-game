@@ -21,7 +21,7 @@ def init_game(line, event, game_db):
         ))
         # line.reply("debugger 中 in group init game")
     else:
-        line.reply("debugger 中 有什麼原因無法init")
+        game_db.debugger_rooms(line)
         # awake_bot(line, event, game_db)
 
 
@@ -50,6 +50,8 @@ def to_start(line, event, game_db):
 def get_user(line, event, game_db):
     if game_db.in_group(event.source.group_id):
         game_db.append_user(event.source.group_id, event.source.user_id, line)
+    else:
+        game_db.debugger_rooms(line)
 
 
 def commands():
