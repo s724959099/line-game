@@ -35,7 +35,7 @@ class GameDB:
         self.rooms = []
 
     def debugger_rooms(self, line):
-        msg = "room len={}\n".format(self.rooms)
+        msg = "room len={}\n".format(len(self.rooms))
         index = 0
         for room in self.rooms:
             temp_dict = room.__dict__
@@ -54,8 +54,9 @@ class GameDB:
         if self.in_group(group_id):
             print("in group")
             return False
-        print("append")
         self.rooms.append(GameRoom(group_id))
+        print("append=", len(self.rooms))
+
         return True
 
     def append_user(self, group_id, user_id, line):
