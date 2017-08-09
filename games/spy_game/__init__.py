@@ -22,7 +22,7 @@ def init_game(line, event, game_db):
                     "遊戲人數",
                 ]
             ))
-            # line.reply("debugger 中 in group init game")
+            line.reply("debugger 中 in group init game")
         else:
             print("else it")
             game_db.debugger_rooms(line)

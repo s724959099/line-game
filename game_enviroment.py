@@ -1,3 +1,4 @@
+import json
 from line_api import *
 
 
@@ -35,13 +36,15 @@ class GameDB:
 
     def debugger_rooms(self, line):
         msg = ""
+        index = 0
         for room in self.rooms:
             temp_dict = room.__dict__
             arr = []
             for user in room.users:
                 arr.append(user.__dict__)
             temp_dict["users"] = arr
-            msg += temp_dict + "\n"
+            msg += "room{}: ".format(index) + json.dumps(temp_dict) + "\n"
+            index += 1
 
         line.reply(msg)
 
