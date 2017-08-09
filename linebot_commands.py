@@ -37,6 +37,6 @@ a=[]
 def events_excute(event):
     line = LineAPI(event)
 
-    line.reply("len={}".format(a))
-    a.append(1)
+    # line.reply("len={}".format(a))
+    # a.append(1)
     # invoker.execute(execute_all=True, event=event, line=line, game_db=game)
