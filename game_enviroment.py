@@ -43,6 +43,7 @@ class GameDB:
             for user in room.users:
                 arr.append(user.__dict__)
             temp_dict["users"] = arr
+            del temp_dict["game"]
             msg += "room{}: ".format(index) + json.dumps(temp_dict) + "\n"
             index += 1
 
