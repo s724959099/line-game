@@ -4,6 +4,7 @@ from line_api import *
 
 class GameRoom:
     def __init__(self, group_id):
+        print("game room init")
         self.group_id = group_id
         self.users = []
         self.game = None
@@ -32,6 +33,7 @@ class GameRoom:
 
 class GameDB:
     def __init__(self):
+        print("game db init")
         self.rooms = []
 
     def debugger_rooms(self, line):
