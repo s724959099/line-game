@@ -6,6 +6,7 @@ PROJECT_NAME = "line-game"
 
 
 def get_module(file):
+    print("file=",file)
     try:
         path = file.rsplit(".py")[0]
         path = path.split(PROJECT_NAME + "/")[1]
