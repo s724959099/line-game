@@ -1,4 +1,5 @@
+from config import *
 
-d = __import__("game_enviroment", globals(), locals(), [""])
-g=d()
-print()
+file_path = os.path.abspath(__file__)
+print(file_path.replace(ROOT_DIR+"/",""))
+print(ROOT_DIR)

@@ -1,15 +1,15 @@
 import json
-import os
+from config import *
 
 FILE_NAME = "db.json"
 PROJECT_NAME = "line-game"
 
 
 def get_module(file):
-    print("file=",file)
     try:
-        path = file.rsplit(".py")[0]
-        path = path.split(PROJECT_NAME + "/")[1]
+        file_path = os.path.abspath(file)
+        file_path= file_path.replace(ROOT_DIR + "/", "")
+        path = file_path.rsplit(".py")[0]
         result = path.replace("/", ".")
         return result
     except:
