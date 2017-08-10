@@ -60,28 +60,29 @@ class Model:
         return cls.__dict_init(d)
 
     @classmethod
-    def __dict_init(cls, d,is_dict=False):
+    def __dict_init(cls, d, is_dict=False):
         if not is_dict:
             c = cls()
         else:
-            c={}
+            c = {}
         for key, item in d.items():
             if not is_dict:
                 c.__dict__[key] = cls.__item_init(item)
             else:
-                c[key]=cls.__item_init(item)
+                c[key] = cls.__item_init(item)
         return c
 
     @classmethod
     def __item_init(cls, item):
         if isinstance(item, dict) and item.get("__class"):
+            print("module=", item.get("__module"))
             m = __import__(item.get("__module"), globals(), locals(), [""])
             sub_cls = getattr(m, item.get("__class"))
             result = sub_cls.init(item)
         elif isinstance(item, dict):
-            result = cls.__dict_init(item,is_dict=True)
+            result = cls.__dict_init(item, is_dict=True)
         elif isinstance(item, list):
-            result=[]
+            result = []
             for i in item:
                 result.append(cls.__item_init(i))
         else:
