@@ -17,7 +17,7 @@ def just_records_message(line, event, game_db):
         message += profile.picture_url + "\n"
         message += profile.status_message + "\n"
         message += "-" * 10
-        line.reply(text(message))
+        line.reply(message)
         return True
 
 
@@ -44,10 +44,8 @@ def awake_bot(line, event, game_db):
 
 def get_user(line, event, game_db):
     if game_db.in_group(event.source.group_id):
-        print("if me")
         game_db.append_user(event.source.group_id, event.source.user_id, line)
     else:
-        print("else me")
         game_db.debugger_rooms(line)
 
 

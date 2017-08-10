@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 from linebot_commands import *
 
+
 app = Flask(__name__)
 
 
@@ -11,20 +12,19 @@ def index():
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    try:
-        # get X-Line-Signature header value
-        signature = request.headers['X-Line-Signature']
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
 
-        # get request body as text
-        body = request.get_data(as_text=True)
-        print("body: ", body)
+    # get request body as text
+    body = request.get_data(as_text=True)
+    print("body: ", body)
 
-        # handle webhook body
+    # handle webhook body
 
-        handler.handle(body, signature)
-    except Exception as e:
-        print(str(e))
-        abort(400)
+    handler.handle(body, signature)
+    # except Exception as e:
+    #     print(str(e))
+    #     abort(400)
 
     return 'OK'
 
@@ -35,5 +35,7 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    print("backend")
-    app.run(port=7000, debug=True, use_reloader=False)
+    from utli import db
+
+    db.write_json({})
+    app.run(port=7000, debug=True)

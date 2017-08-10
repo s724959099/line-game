@@ -1,11 +1,13 @@
 import json
 from line_api import *
 from utli import db
+from games.spy_game.game import SpyGame
 
 
-class GameRoom:
-    def __init__(self, group_id):
-        print("game room init")
+class GameRoom(db.Model):
+    FILE = __file__
+
+    def __init__(self, group_id=None):
         self.group_id = group_id
         self.users = []
         self.game = None
@@ -14,13 +16,18 @@ class GameRoom:
         if self.in_users(user_id):
             return False
         profile = line.get_profile(user_id)
-        self.users.append(profile)
+        self.users.append({
+            "display_name": profile.display_name,
+            "picture_url": profile.picture_url,
+            "status_message": profile.status_message,
+            "user_id": profile.user_id,
+        })
         line.reply("目前人數為＝{}".format(len(self.users)))
         return True
 
     def in_users(self, user_id):
         for item in self.users:
-            if item.user_id == user_id:
+            if item["user_id"]== user_id:
                 return True
         return False
 
@@ -28,7 +35,7 @@ class GameRoom:
         message = "遊戲人數為: {}\n".format(len(self.users))
         message += "-" * 20 + "\n"
         for profile in self.users:
-            message += "{} \n".format(profile.display_name)
+            message += "{} \n".format(profile["display_name"])
         line.reply(message)
 
 
@@ -42,7 +49,9 @@ class Singleton:
         return cls.__singleton
 
 
-class GameDB(Singleton):
+class GameDB(db.Model):
+    FILE = __file__
+
     def __init__(self):
         self.rooms = []
 
@@ -64,10 +73,8 @@ class GameDB(Singleton):
 
     def append_group(self, group_id):
         if self.in_group(group_id):
-            print("in group")
             return False
         self.rooms.append(GameRoom(group_id))
-        print("append=", len(self.rooms))
 
         return True
 

@@ -1,8 +1,11 @@
 import random
 from line_api import *
+from utli import db
 
 
-class SpyGame:
+class SpyGame(db.Model):
+    FILE = __file__
+
     def init_images(self):
         self.postion_images = [
             ("醫院", "https://i.imgur.com/ffgqsjU.png"),
@@ -56,11 +59,11 @@ class SpyGame:
     def show_card_to_user(self, line):
         for profile in self.users:
             if profile in self.spy_users:
-                line.push(profile.user_id, text_message(self.spy_image[0]))
-                line.push(profile.user_id, image_message(self.spy_image[1]))
+                line.push(profile["user_id"], text_message(self.spy_image[0]))
+                line.push(profile["user_id"], image_message(self.spy_image[1]))
             else:
-                line.push(profile.user_id, text_message(self.picker_position[0]))
-                line.push(profile.user_id, image_message(self.picker_position[1]))
+                line.push(profile["user_id"], text_message(self.picker_position[0]))
+                line.push(profile["user_id"], image_message(self.picker_position[1]))
 
     def show_spy(self, line):
         if self.users is None:
@@ -69,7 +72,7 @@ class SpyGame:
         msg += "-" * 30
         for profile in self.spy_users:
             msg += "\n"
-            msg += profile.display_name + "\n"
+            msg += profile["display_name"] + "\n"
             msg += "-" * 30
 
         line.reply(msg)
