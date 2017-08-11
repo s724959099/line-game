@@ -2,7 +2,6 @@ import json
 from config import *
 
 FILE_NAME = "db.json"
-PROJECT_NAME = "line-game"
 
 
 def get_module(file):
@@ -76,8 +75,6 @@ class Model:
     @classmethod
     def __item_init(cls, item):
         if isinstance(item, dict) and item.get("__class"):
-            print("module=", item.get("__module"))
-            print("class=", item.get("__class"))
             m = __import__(item.get("__module"), globals(), locals(), [""])
             sub_cls = getattr(m, item.get("__class"))
             result = sub_cls.init(item)
