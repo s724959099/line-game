@@ -35,11 +35,11 @@ class SpyGame(db.Model):
                 self.spy_users.append(profile)
                 break
 
-    def show_position(self, line):
+    def show_position(self, group_id, line):
         s = "場景為：\n"
         for item in self.get_positions():
             s += "{}\n".format(item)
-        line.reply(s)
+        line.push(group_id, s)
 
     def play(self, users, line):
         self.users = users
@@ -65,7 +65,7 @@ class SpyGame(db.Model):
                 line.push(profile["user_id"], text_message(self.picker_position[0]))
                 line.push(profile["user_id"], image_message(self.picker_position[1]))
 
-    def show_spy(self, line):
+    def show_game(self, group_id, line):
         if self.users is None:
             return False
         msg = "間諜名單為:\n"
@@ -75,4 +75,6 @@ class SpyGame(db.Model):
             msg += profile["display_name"] + "\n"
             msg += "-" * 30
 
-        line.reply(msg)
+        line.push(group_id, msg)
+        line.push(group_id, "地點為: {}".format(self.picker_position[0]))
+        line.push(group_id, image_message(self.picker_position[1]))

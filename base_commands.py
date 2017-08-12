@@ -1,5 +1,6 @@
 from utli.commands import Invoker, SimpleCommandFactory
 from line_api import *
+from games.spy_game.game import SpyGame
 
 
 def template(title, msg, messages):
@@ -46,24 +47,28 @@ def get_user(line, event, game_db):
     if game_db.in_group(event.source.group_id):
         game_db.append_user(event.source.group_id, event.source.user_id, line)
     else:
-        game_db.debugger_rooms(line)
+        append_group(line, event, game_db)
 
 
-def to_start(line, event, game_db):
-    room = game_db.get_room(event.source.group_id)
-    if not room:
-        line.reply("找不到遊戲房間")
-    else:
-        spy_game = room.game
-        spy_game.play(room.users[:], line)
-        spy_game.show_position(line)
-        spy_game.show_card_to_user(line)
+def spy_gmae(line, event, game_db):
+    if game_db.in_group(event.source.group_id):
+        game_db.get_room(event.source.group_id).game = SpyGame()
+        line.reply(template(
+            "遊戲建立中",
+            "參加玩家回答完後回答好了即可開始",
+            [
+                "我",
+                "OK",
+                "遊戲人數",
+                ("遊戲說明", "http://boardgame-record.blogspot.tw/2015/06/spyfall.html")
+            ]
+        ))
 
 
 def commands():
     return [
+        SimpleCommandFactory(spy_gmae, "間諜遊戲"),
         SimpleCommandFactory(get_user, "我"),
-        SimpleCommandFactory(to_start, "好了"),
         SimpleCommandFactory(awake_bot, "q bot"),
         SimpleCommandFactory(append_group, "開始玩"),
         SimpleCommandFactory(show_game_player, "遊戲人數"),

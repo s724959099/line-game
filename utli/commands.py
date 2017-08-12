@@ -15,6 +15,7 @@ class SimpleCommandFactory(Command):
         self.__text = trigger_text
         if isinstance(self.__text, str):
             self.__text = [self.__text]
+        self.__text = list(map(lambda x: x.lower(), self.__text))
         self.__only_group = only_group
         self.__no_if = no_if
 
