@@ -1,7 +1,6 @@
-from game_enviroment import *
-from line_api import *
-from games import spy_game
-import base_commands
+from games import spy_game, base_commands
+from games.game_enviroment import *
+from utli.line_api import *
 
 add_list = [
     (None, base_commands),

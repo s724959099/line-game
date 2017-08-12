@@ -1,6 +1,5 @@
-from utli.commands import Invoker, SimpleCommandFactory
-from line_api import *
 from games.spy_game.game import SpyGame
+from utli.line_api import *
 
 
 def template(title, msg, messages):
@@ -46,8 +45,6 @@ def awake_bot(line, event, game_db):
 def get_user(line, event, game_db):
     if game_db.in_group(event.source.group_id):
         game_db.append_user(event.source.group_id, event.source.user_id, line)
-    else:
-        append_group(line, event, game_db)
 
 
 def spy_gmae(line, event, game_db):

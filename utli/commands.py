@@ -1,6 +1,3 @@
-from utli.tool import print_exception
-
-
 class Command:
     def execute(self):
         raise NotImplemented

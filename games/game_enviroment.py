@@ -1,7 +1,6 @@
 import json
-from line_api import *
+
 from utli import db
-from games.spy_game.game import SpyGame
 
 
 class GameRoom(db.Model):

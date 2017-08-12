@@ -1,4 +1,4 @@
-from base_commands import *
+from games.base_commands import *
 
 
 def template(title, msg, messages):
