@@ -1,6 +1,6 @@
 import json
-
 from utli import db
+from games.spy_game.game import SpyGame
 
 
 class GameRoom(db.Model):
@@ -26,7 +26,7 @@ class GameRoom(db.Model):
 
     def in_users(self, user_id):
         for item in self.users:
-            if item["user_id"]== user_id:
+            if item["user_id"] == user_id:
                 return True
         return False
 
