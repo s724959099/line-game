@@ -1,6 +1,7 @@
 import random
 
 from utli import db
+from utli.tool import *
 from utli.line_api import *
 
 
@@ -74,7 +75,8 @@ class SpyGame(db.Model):
             else:
                 line.push(profile["user_id"], text_message(self.picker_position[0]))
                 line.push(profile["user_id"], image_message(self.picker_position[1]))
-                line.push(profile["user_id"], image_message("您這場的角色為: {}".format(self.picker_position[2])))
+                role = choose_list(self.picker_position[2], 1)
+                line.push(profile["user_id"], image_message("您這場的角色為: {}".format(role)))
 
     def show_game(self, group_id, line):
         if self.users is None:

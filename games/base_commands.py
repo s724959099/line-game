@@ -1,5 +1,6 @@
-from games.spy_game.game import SpyGame
 from utli.line_api import *
+from games.spy_game.game import SpyGame
+from games.woof_game.game import WoofGame
 
 
 def template(title, msg, messages):
@@ -31,6 +32,9 @@ def show_game_player(line, event, game_db):
 
 
 def append_group(line, event, game_db):
+    """
+    在這邊把 groupid 加進去room裡
+    """
     game_db.append_group(event.source.group_id)
     line.reply(template("請選擇遊戲", "未來會陸續新增其他遊戲，敬請期待", ["間諜遊戲"]))
 
@@ -67,7 +71,7 @@ def commands():
         SimpleCommandFactory(spy_gmae, "間諜遊戲"),
         SimpleCommandFactory(get_user, "我"),
         SimpleCommandFactory(awake_bot, "q bot"),
-        SimpleCommandFactory(append_group, "開始玩"),
+        SimpleCommandFactory(append_group, "開始玩"),  # 在這邊把 groupid 加進去room裡
         SimpleCommandFactory(show_game_player, "遊戲人數"),
         SimpleCommandFactory(just_records_message, "test"),
     ]

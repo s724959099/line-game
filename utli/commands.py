@@ -7,7 +7,14 @@ class Command:
 
 
 class SimpleCommandFactory(Command):
-    def __init__(self, func, trigger_text, only_group=True, no_if=False):
+    def __init__(self, func, trigger_text=None, only_group=True, no_if=False):
+        """
+
+        :param func: 要執行的function
+        :param trigger_text: 判斷的文字
+        :param only_group: 只在group的message 判斷
+        :param no_if: 前面兩個就不判斷了
+        """
         self.__fn = func
         self.__text = trigger_text
         if isinstance(self.__text, str):
