@@ -73,7 +73,7 @@ class SpyGame(db.Model):
                 line.push(profile["user_id"], text_message(self.picker_position[0]))
                 line.push(profile["user_id"], image_message(self.picker_position[1]))
                 role = choose_list(self.picker_position[2], 1)
-                line.push(profile["user_id"], image_message("您這場的角色為: {}".format(role)))
+                line.push(profile["user_id"], text_message("您這場的角色為: {}".format(role)))
 
     def show_game(self, group_id, line):
         if self.users is None:
