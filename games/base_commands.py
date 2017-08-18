@@ -1,4 +1,4 @@
-from utli.line_api import *
+from utli.base_import import *
 from games.spy_game.game import SpyGame
 from games.woof_game.game import WoofGame
 

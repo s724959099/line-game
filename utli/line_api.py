@@ -39,12 +39,12 @@ class LineAPI:
         except Exception as e:
             print("done")
 
-    def reply_template(self, title, text, messages):
+    def reply_template(self, title, text, url, messages):
         while len(messages) > 4:
             pop = []
             while len(pop) <= 4 and len(messages) > 0:
                 pop.append(messages.pop())
-            self.reply(template(title, text, pop))
+            self.reply(base_template(title, text, url, pop))
 
     def get_profile(self, user_id):
         """
@@ -59,7 +59,7 @@ class LineAPI:
         return profile
 
 
-def base_template(title, msg,url, messages):
+def base_template(title, msg, url, messages):
     actions = []
     for message in messages:
         if isinstance(message, str):

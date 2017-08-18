@@ -16,12 +16,12 @@ def get_module(file):
         return ""
 
 
-def write_json(d):
+def write_json(d,FILE_NAME=FILE_NAME):
     with open(FILE_NAME, "w") as f:
         json.dump(d, f)
 
 
-def read_json():
+def read_json(FILE_NAME=FILE_NAME):
     try:
         with open(FILE_NAME) as f:
             return json.load(f)

@@ -1,8 +1,5 @@
 import random
-
-from utli import db
-from utli.tool import *
-from utli.line_api import *
+from utli.base_import import *
 
 
 class SpyGame(db.Model):

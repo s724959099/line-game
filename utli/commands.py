@@ -26,12 +26,12 @@ class SimpleCommandFactory(Command):
     def execute(self, *args, **kwargs):
         event = kwargs["event"]
         if self.__no_if:
+            print("before function= {} called".format(self.__fn.__name__))
             self.__fn(*args, **kwargs)
-            print("fn name=", self.__fn.__name__)
         elif event.message.text.lower() in self.__text:
             if not self.__only_group or event.source.type == "group":
+                print("before function= {} called".format(self.__fn.__name__))
                 self.__fn(*args, **kwargs)
-                print("fn name=", self.__fn.__name__)
 
 
 class Invoker:

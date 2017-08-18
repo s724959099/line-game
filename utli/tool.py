@@ -1,6 +1,10 @@
 import random
 
 
+class MockClass:
+    pass
+
+
 def happen_percent(percent):
     return True if random.random() < percent else False
 
