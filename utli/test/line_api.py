@@ -1,3 +1,4 @@
+from games.tod_game import template
 from utli import db
 from utli import color_print as cp
 from utli.tool import *
@@ -39,7 +40,7 @@ class LineAPI:
         if self.event.source.type == "group":
             self.__send(self.group.group_id, msg)
         else:
-            self.__send(event.source.user_id, msg)
+            self.__send(self.event.source.user_id, msg)
 
     def push(self, user_id, msg):
         self.__send(user_id, msg)
