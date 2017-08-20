@@ -15,6 +15,7 @@ def choose_list(arr, count, repeat=False):
     else:
         result = []
         sr = random.SystemRandom()
+
         for i in range(count):
             result.append(sr.choice(arr))
         return result

@@ -1,9 +1,11 @@
-from games import spy_game, base_commands
+from games import spy_game, base_commands, tod_game
 from games.game_enviroment import *
 from utli.base_import import *
+from utli.line_api import *
 add_list = [
     (None, base_commands),
     (SpyGame, spy_game),
+    (TodGame, tod_game),
 ]
 
 

@@ -6,7 +6,7 @@ class SpyGame(db.Model):
     FILE = __file__
 
     def init_images(self):
-        self.postion_images = [
+        self.position_images = [
             ("醫院", "https://i.imgur.com/ffgqsjU.png",
              ["俏護士", "怪醫黑傑克", "兩光醫生", "帶兩串香蕉探病的病人家屬", "頭髮骨折的病人", "院長", "志工", "保全", "水電工", "外送小弟"]),
             ("十字軍東征", "https://i.imgur.com/mIJZQkE.jpg",
@@ -34,7 +34,7 @@ class SpyGame(db.Model):
         self.init_images()
 
     def get_positions(self):
-        return list(map(lambda item: item[0], self.postion_images))
+        return list(map(lambda item: item[0], self.position_images))
 
     def picker_spy(self):
         while True:
@@ -62,7 +62,7 @@ class SpyGame(db.Model):
         for i in range(spy_count):
             self.picker_spy()
 
-        self.picker_position = random.choice(self.postion_images)
+        self.picker_position = random.choice(self.position_images)
 
     def show_card_to_user(self, line):
         for profile in self.users:
