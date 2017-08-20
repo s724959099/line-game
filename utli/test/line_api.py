@@ -1,4 +1,3 @@
-from games.tod_game import template
 from utli import db
 from utli import color_print as cp
 from utli.tool import *
