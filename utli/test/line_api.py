@@ -125,6 +125,20 @@ def image_message(url):
     return "圖片網址： " + url
 
 
+def choose_user(arr):
+    index = 0
+    msg = "使用者為：\n"
+    for user in arr:
+        msg += "[{}] {}\n".format(index, user.profile["display_name"])
+        index += 1
+    msg += "請輸入角色Id: "
+    cp.p(msg, cp.colors.red)
+    input_id = int(input())
+    cp.p("請輸入要說的話: ", cp.colors.red)
+    input_msg = input()
+    arr[input_id].speak(input_msg)
+
+
 class UserFactory:
     index = 1
 
@@ -151,11 +165,12 @@ if __name__ == "__main__":
         UserFactory.get_instance(),
         UserFactory.get_instance(),
     ])
-    user_list[0].speak("開始玩")
-    user_list[0].speak("間諜遊戲")
-    for user in user_list:
-        user.speak("我")
-    user_list[0].speak("遊戲人數")
-    user_list[0].speak("OK")
-    user_list[0].speak("重新開始")
-    user_list[0].speak("結束遊戲")
+    choose_user(user_list)
+    # user_list[0].speak("開始玩")
+    # user_list[0].speak("間諜遊戲")
+    # for user in user_list:
+    #     user.speak("我")
+    # user_list[0].speak("遊戲人數")
+    # user_list[0].speak("OK")
+    # user_list[0].speak("重新開始")
+    # user_list[0].speak("結束遊戲")

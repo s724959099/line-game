@@ -31,15 +31,15 @@ def show_game_player(line, event, game_db):
         game_db.debugger_rooms(line)
         # awake_bot(line, event, game_db)
 
-print("ok")
-def append_group(line, event, game_db):
 
+def append_group(line, event, game_db):
     """
     在這邊把 groupid 加進去room裡
     """
     game_db.append_group(event.source.group_id)
-    line.reply(template("請選擇遊戲", "未來會陸續新增其他遊戲，敬請期待", ["間諜遊戲","真心話大冒險"]))
+    line.reply(template("請選擇遊戲", "未來會陸續新增其他遊戲，敬請期待", ["間諜遊戲", "真心話大冒險"]))
     # line.push(template("請選擇遊戲", "未來會陸續新增其他遊戲，敬請期待", ["間諜遊戲","真心話大冒險"]))
+
 
 def awake_bot(line, event, game_db):
     line.reply(template("Game bot", "請選擇", [
@@ -66,6 +66,7 @@ def spy_game(line, event, game_db):
                 ("遊戲說明", "http://boardgame-record.blogspot.tw/2015/06/spyfall.html")
             ]
         ))
+
 
 def tod_game(line, event, game_db):
     if game_db.in_group(event.source.group_id):
