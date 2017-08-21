@@ -3,6 +3,8 @@ from utli import db
 from games.spy_game.game import SpyGame
 from games.tod_game.game import TodGame
 
+
+
 class GameRoom(db.Model):
     FILE = __file__
 

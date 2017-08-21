@@ -1,5 +1,7 @@
 from games.base_commands import *
 from games.tod_game.game import TodGame
+from games.game_enviroment import *
+
 
 def template(title, msg, messages):
     url = 'https://i.imgur.com/K9R7i8R.jpg'
@@ -75,6 +77,15 @@ def adventure(line, event, game_db):
 
 def game_lobby(line, event, game_db):
     append_group(line, event, game_db)
+    # room = game_db.get_room(event.source.group_id)
+    # if room.game == None:
+    #     append_group(line, event, game_db)
+    # else:
+    #     line.push(event.source.group_id, template(
+    #         "",
+    #         "請按下方結束遊戲",
+    #         ["結束遊戲"]
+    #     ))
 
 
 def commands():

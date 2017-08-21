@@ -9,6 +9,7 @@ if __name__ == "__main__":
         UserFactory.get_instance(),
         UserFactory.get_instance(),
     ])
+
     user_list[0].speak("開始玩")
     user_list[0].speak("真心話大冒險")
     # user_list[0].speak("間諜遊戲")
@@ -22,6 +23,7 @@ if __name__ == "__main__":
         # user.speak("大冒險")
         user.speak("真心話")
 
+
+    # user_list[0].speak("重新開始")
     # user_list[0].speak("結束遊戲")
-    user_list[0].speak("重新開始")
     user_list[0].speak("遊戲大廳")

@@ -1,4 +1,5 @@
-from games.tod_game import template
+# from games.tod_game import template
+# from utli.base_import import *
 from utli import db
 from utli import color_print as cp
 from utli.tool import *
@@ -21,6 +22,7 @@ class Group:
 
 
 class LineAPI:
+    print("t2")
     def __init__(self, event):
         self.event = event
         self.group = Group()
