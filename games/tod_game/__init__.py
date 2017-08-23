@@ -3,6 +3,7 @@ from games.tod_game.game import TodGame
 from games.game_enviroment import *
 
 
+
 def template(title, msg, messages):
     url = 'https://i.imgur.com/K9R7i8R.jpg'
     return base_template(title, msg, url, messages)
@@ -57,7 +58,7 @@ def true_talk(line, event, game_db):
     tod_game = room.game
     # tod_game.play = (room.users[:], line)
 
-    tod_game.truth_talk(line,event)
+    tod_game.truth_talk(line, event)
     line.push(event.source.group_id, template(
         "title",
         "msg",
@@ -66,14 +67,16 @@ def true_talk(line, event, game_db):
 
 
 def adventure(line, event, game_db):
+
     room = game_db.get_room(event.source.group_id)
     tod_game = room.game
-    tod_game.adventure(line,event)
+    tod_game.adventure(line, event)
     line.push(event.source.group_id, template(
         "title",
         "msg",
         ["結束遊戲", "重新開始", "遊戲大廳"]
     ))
+
 
 def game_lobby(line, event, game_db):
     append_group(line, event, game_db)

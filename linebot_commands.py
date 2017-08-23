@@ -10,7 +10,6 @@ add_list = [
 
 
 def events_excute(event):
-    
     line = LineAPI(event)
     game_db = GameDB.init(db.read_json())
 
