@@ -9,8 +9,9 @@ class TodGame(db.Model):
     def __init__(self):
         self.users = []
         self.speical_man = None
-        self.spy_users = []
+        self.tod_users = []
         self.picker_position = None
+        self.finel_user = 0
         self.init_data()
 
     def init_data(self):
@@ -51,11 +52,11 @@ class TodGame(db.Model):
             line.reply("沒有玩家oops")
         print("user count=", len(users))
         user_count = len(users)
-        spy_count = int(user_count / 3)
-        if spy_count == 0:
-            spy_count = 1
-        self.spy_users = []
-        for i in range(spy_count):
+        tod_count = int(user_count / 3)
+        if tod_count == 0:
+            tod_count = 1
+        self.tod_users = []
+        for i in range(tod_count):
             self.picker_spy()
 
         self.picker_position = random.choice(self.truth_talk_db)
@@ -64,19 +65,27 @@ class TodGame(db.Model):
         self.speical_man = choose_list(self.users, 1)[0]
         line.reply('the man is {}'.format(self.speical_man["display_name"]))
 
-    def truth_talk(self, line, event):
-        # sr = random.SystemRandom()
+    def finelcode_user(self, line, event):
+        # while True:
+        #     msg = choose_user(user_list)
+        #     if msg == "break":
+        #         break
+        pass
 
+
+    def truth_talk(self, line, event):
         self.picker_position = random.choice(self.truth_talk_db)
 
-        line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position[random.choice(range(0,9))]))
-
-        # if event.source.user_id == self.speical_man["user_id"]:
-        #     line.push(event.source.group_id,"say truth")
+        if event.source.user_id == self.speical_man["user_id"]:
+            line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position[random.choice(range(0, 9))]))
+            return True
+            # line.push(event.source.group_id,"say truth")
 
 
     def adventure(self, line, event):
         self.picker_position = random.choice(self.adventure_db)
-        line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position[random.choice(range(0,9))]))
-        # if event.source.user_id == self.speical_man["user_id"]:
+
+        if event.source.user_id == self.speical_man["user_id"]:
+            line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position[random.choice(range(0, 9))]))
+            return True
         #     line.push(event.source.group_id, "say adventure")

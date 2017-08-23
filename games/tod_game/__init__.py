@@ -2,6 +2,7 @@ from games.base_commands import *
 from games.tod_game.game import TodGame
 from games.game_enviroment import *
 
+import random
 
 
 def template(title, msg, messages):
@@ -10,6 +11,7 @@ def template(title, msg, messages):
 
 
 def to_start(line, event, game_db):
+
     line.push(event.source.group_id, template(
         "title",
         "msg",
@@ -37,13 +39,9 @@ def random_peo(line, event, game_db):
     ))
 
 
-def finelcode_peo(line, event, game_db):
-    pass
-
-
 def end_gmae(line, event, game_db):
     room = game_db.get_room(event.source.group_id)
-    room.game.show_game(event.source.group_id, line)
+    # room.game.show_game(event.source.group_id, line)
     room.game = None
 
 
@@ -53,29 +51,69 @@ def restart_gmae(line, event, game_db):
     to_start(line, event, game_db)
 
 
+def finelcode(line, event, game_db):
+    room = game_db.get_room(event.source.group_id)
+    tod_game = room.game
+    pw = random.randint(1, 99)
+    pw_head = 0
+    pw_tail = 100
+    msg = 0
+    # random.sample(range(10), 10)
+    # random.randint(0, 99)
+
+    while pw != msg:
+
+        for i in user_list:
+            print("range {0}-{1}".format(pw_head, pw_tail))
+            msg = choose_user(user_list, i.profile["display_name"] , pw_head, pw_tail)
+
+            if msg == pw:
+                print("Boom\nWin '{}'".format(i.profile["display_name"]))
+            elif msg<pw:
+                pw_head = msg
+            elif msg>pw:
+                pw_tail = msg
+
+            if msg == pw: break
+
+    # choose_user(user_list)
+
+
+
+    # for i in event.user_list:
+    #     game.users = room.users[:]
+    #     if event.source.user_id == self.speical_man["user_id"]:
+
+    # game.random_user
+    # line.push()
+    # line.reply('the man is {}'.format(self.speical_man["display_name"]))
+
+
+
 def true_talk(line, event, game_db):
     room = game_db.get_room(event.source.group_id)
     tod_game = room.game
     # tod_game.play = (room.users[:], line)
 
-    tod_game.truth_talk(line, event)
-    line.push(event.source.group_id, template(
-        "title",
-        "msg",
-        ["結束遊戲", "重新開始", "遊戲大廳"]
-    ))
+    if(tod_game.truth_talk(line, event)):
+        line.push(event.source.group_id, template(
+            "title",
+            "msg",
+            ["結束遊戲", "重新開始", "遊戲大廳"]
+        ))
 
 
 def adventure(line, event, game_db):
 
     room = game_db.get_room(event.source.group_id)
     tod_game = room.game
-    tod_game.adventure(line, event)
-    line.push(event.source.group_id, template(
-        "title",
-        "msg",
-        ["結束遊戲", "重新開始", "遊戲大廳"]
-    ))
+
+    if(tod_game.adventure(line, event)):
+        line.push(event.source.group_id, template(
+            "title",
+            "msg",
+            ["結束遊戲", "重新開始", "遊戲大廳"]
+        ))
 
 
 def game_lobby(line, event, game_db):
@@ -96,7 +134,7 @@ def commands():
         SimpleCommandFactory(to_start, "OK"),
 
         SimpleCommandFactory(random_peo, "電腦隨機"),
-        SimpleCommandFactory(finelcode_peo, "終極密碼"),
+        SimpleCommandFactory(finelcode, "終極密碼"),
         SimpleCommandFactory(true_talk, "真心話"),
         SimpleCommandFactory(adventure, "大冒險"),
 

@@ -13,17 +13,20 @@ if __name__ == "__main__":
     user_list[0].speak("開始玩")
     user_list[0].speak("真心話大冒險")
     # user_list[0].speak("間諜遊戲")
+    # user_list[0].speak("終極密碼")
     for user in user_list:
-        user_list[0].speak("我")
+        user.speak("我")
 
     user_list[0].speak("OK")
 
-    user_list[0].speak("電腦隨機")
+    # user_list[0].speak("電腦隨機")
+    user_list[0].speak("終極密碼")
     for user in user_list:
         # user.speak("大冒險")
-        user.speak("真心話")
+        # user.speak("真心話")
+        pass
 
 
     # user_list[0].speak("重新開始")
-    # user_list[0].speak("結束遊戲")
-    user_list[0].speak("遊戲大廳")
+    user_list[0].speak("結束遊戲")
+    # user_list[0].speak("遊戲大廳")
