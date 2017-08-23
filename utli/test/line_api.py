@@ -137,6 +137,7 @@ def choose_user(arr):
     cp.p("請輸入要說的話: ", cp.colors.red)
     input_msg = input()
     arr[input_id].speak(input_msg)
+    return input_msg
 
 
 class UserFactory:
@@ -165,7 +166,10 @@ if __name__ == "__main__":
         UserFactory.get_instance(),
         UserFactory.get_instance(),
     ])
-    choose_user(user_list)
+    while True:
+        msg = choose_user(user_list)
+        if msg == "break":
+            break
     # user_list[0].speak("開始玩")
     # user_list[0].speak("間諜遊戲")
     # for user in user_list:
