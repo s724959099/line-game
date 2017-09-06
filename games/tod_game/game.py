@@ -1,4 +1,5 @@
 from utli.base_import import *
+import re
 
 class TodGame(db.Model):
     FILE = __file__
@@ -54,15 +55,21 @@ class TodGame(db.Model):
 
         while True:
 
-            if input_msg.isdigit() :
+            if re.compile(r'^[0-9]+$').match(input_msg):
+            # if input_msg.isdigit() :
                 if int(input_msg) > pw_head and int(input_msg) < pw_tail and int(input_msg) != pw:
                     return int(input_msg)
                 elif int(input_msg) == pw:
                     self.speical_man = line.profile
                     return int(input_msg)
+                else:
+                    print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
+                    cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+                    input_msg = input()
+
             else:
-                print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
-                cp.p(self.users.name + "請輸入密碼: ", cp.colors.red)
+                print("Please can only input number \n range({}-{})!!!!".format(pw_head, pw_tail))
+                cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
                 input_msg = input()
 
 
