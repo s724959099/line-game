@@ -70,11 +70,7 @@ def finelcode(line, event, game_db, pw=None):
 
         for i in user_list:
             print("range {0}-{1}".format(pw_head, pw_tail))
-            msg = game.finelcode_user(line, i.profile["display_name"] , pw_head, pw_tail, fipw)
-            # msg = choose_user(user_list, i.profile["display_name"] , pw_head, pw_tail)
-
-
-
+            msg = game.finelcode_user(i, pw_head, pw_tail, fipw)
 
             if msg == fipw:
                 print("Boom\nWin '{}'".format(i.profile["display_name"]))
