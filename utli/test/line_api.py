@@ -131,15 +131,13 @@ def choose_user(arr):
     for user in arr:
         msg += "[{}] {}\n".format(index, user.profile["display_name"])
         index += 1
-
     msg += "請輸入角色Id: "
     cp.p(msg, cp.colors.red)
     input_id = int(input())
     cp.p("請輸入要說的話: ", cp.colors.red)
     input_msg = input()
-
     arr[input_id].speak(input_msg)
-
+    return input_msg
 
 
 class UserFactory:

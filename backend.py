@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 from linebot_commands import *
 
-from utli.line_api import *
 
 app = Flask(__name__)
 
@@ -39,4 +38,4 @@ if __name__ == "__main__":
     from utli import db
 
     db.write_json({})
-    app.run(port=8080, debug=True)
+    app.run(port=7000, debug=True)
