@@ -16,6 +16,4 @@ if __name__ == "__main__":
     user_list[0].speak("遊戲人數")
     user_list[0].speak("OK")
     user_list[0].speak("重新開始")
-    # user_list[0].speak("結束遊戲")
-    user_list[0].speak("遊戲大廳")
-
+    user_list[0].speak("結束遊戲")

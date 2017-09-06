@@ -125,36 +125,19 @@ def image_message(url):
     return "圖片網址： " + url
 
 
-def choose_user(arr, us_name, pw_head, pw_tail):
-    # index = 0
-    # msg = "使用者為：\n"
-    # for user in arr:
-    #     msg += "[{}] {}\n".format(index, user.profile["display_name"])
-    #     index += 1
-    # print("input number(" + pw_head + "-" + pw_tail + ")")
-    # msg += "請輸入角色Id: "
-    # cp.p(msg, cp.colors.red)
-
-    # print("input number( %d - %d)" % (pw_head, pw_tail))
-
-
-    cp.p(us_name + "請輸入密碼: ", cp.colors.red)
+def choose_user(arr):
+    index = 0
+    msg = "使用者為：\n"
+    for user in arr:
+        msg += "[{}] {}\n".format(index, user.profile["display_name"])
+        index += 1
+    msg += "請輸入角色Id: "
+    cp.p(msg, cp.colors.red)
+    input_id = int(input())
+    cp.p("請輸入要說的話: ", cp.colors.red)
     input_msg = input()
-
-
-    while True:
-        if int(input_msg)>pw_head and int(input_msg)<pw_tail:
-            return int(input_msg)
-        else:
-            print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
-            cp.p(us_name + "請輸入密碼: ", cp.colors.red)
-            input_msg = input()
-
-
-
-
-    # arr[us_name].speak(input_msg)
-
+    arr[input_id].speak(input_msg)
+    return input_msg
 
 
 class UserFactory:
@@ -183,10 +166,10 @@ if __name__ == "__main__":
         UserFactory.get_instance(),
         UserFactory.get_instance(),
     ])
-    # while True:
-    #     msg = choose_user(user_list)
-    #     if msg == "break":
-    #         break
+    while True:
+        msg = choose_user(user_list)
+        if msg == "break":
+            break
     # user_list[0].speak("開始玩")
     # user_list[0].speak("間諜遊戲")
     # for user in user_list:

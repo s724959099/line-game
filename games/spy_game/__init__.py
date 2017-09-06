@@ -1,5 +1,5 @@
 from games.base_commands import *
-from games.spy_game.game import SpyGame
+
 
 def template(title, msg, messages):
     url = 'https://i.imgur.com/K9R7i8R.jpg'
@@ -18,7 +18,7 @@ def to_start(line, event, game_db):
     line.push(event.source.group_id, template(
         "遊戲指令",
         "間諜遊戲指令如下",
-        ["結束遊戲", "重新開始", "遊戲大廳"]
+        ["結束遊戲", "重新開始"]
     ))
 
 
@@ -34,25 +34,10 @@ def restart_gmae(line, event, game_db):
     room.game = SpyGame()
     to_start(line, event, game_db)
 
-def game_lobby (line, event, game_db):
-    append_group(line, event, game_db)
-
-    # room = game_db.get_room(event.source.group_id)
-    # if room.game == None:
-    #     append_group(line, event, game_db)
-    # else:
-    #     line.push(event.source.group_id, template(
-    #         "",
-    #         "請按下方結束遊戲",
-    #         ["結束遊戲"]
-    #     ))
-
-
 
 def commands():
     return [
         SimpleCommandFactory(to_start, "OK"),
         SimpleCommandFactory(end_gmae, "結束遊戲"),
         SimpleCommandFactory(restart_gmae, "重新開始"),
-        SimpleCommandFactory(game_lobby, "遊戲大廳"),
     ]
