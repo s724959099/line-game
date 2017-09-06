@@ -51,42 +51,39 @@ def restart_gmae(line, event, game_db):
     to_start(line, event, game_db)
 
 
-def finelcode(line, event, game_db):
+def finelcode(line, event, game_db, pw=None):
     room = game_db.get_room(event.source.group_id)
-    tod_game = room.game
-    pw = random.randint(1, 99)
+    game = room.game
+    # game.users = room.users[:]
+    # game.random_user(line)
+
+    fipw = random.randint(1, 99)
+
     pw_head = 0
     pw_tail = 100
     msg = 0
     # random.sample(range(10), 10)
     # random.randint(0, 99)
 
-    while pw != msg:
+
+    while fipw != msg:
 
         for i in user_list:
             print("range {0}-{1}".format(pw_head, pw_tail))
-            msg = choose_user(user_list, i.profile["display_name"] , pw_head, pw_tail)
+            msg = game.finelcode_user(line, i.profile["display_name"] , pw_head, pw_tail, fipw)
+            # msg = choose_user(user_list, i.profile["display_name"] , pw_head, pw_tail)
 
-            if msg == pw:
+
+
+
+            if msg == fipw:
                 print("Boom\nWin '{}'".format(i.profile["display_name"]))
-            elif msg<pw:
+            elif msg<fipw:
                 pw_head = msg
-            elif msg>pw:
+            elif msg>fipw:
                 pw_tail = msg
 
-            if msg == pw: break
-
-    # choose_user(user_list)
-
-
-
-    # for i in event.user_list:
-    #     game.users = room.users[:]
-    #     if event.source.user_id == self.speical_man["user_id"]:
-
-    # game.random_user
-    # line.push()
-    # line.reply('the man is {}'.format(self.speical_man["display_name"]))
+            if msg == fipw: break
 
 
 

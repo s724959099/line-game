@@ -23,8 +23,8 @@ if __name__ == "__main__":
     user_list[0].speak("終極密碼")
     for user in user_list:
         # user.speak("大冒險")
-        # user.speak("真心話")
-        pass
+        user.speak("真心話")
+        # pass
 
 
     # user_list[0].speak("重新開始")

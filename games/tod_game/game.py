@@ -46,31 +46,41 @@ class TodGame(db.Model):
         ]
         # self.spy_image = ("間諜", "https://i.imgur.com/K9R7i8R.jpg")
 
-    def play(self, users, line):
-        self.users = users
-        if len(self.users) is None:
-            line.reply("沒有玩家oops")
-        print("user count=", len(users))
-        user_count = len(users)
-        tod_count = int(user_count / 3)
-        if tod_count == 0:
-            tod_count = 1
-        self.tod_users = []
-        for i in range(tod_count):
-            self.picker_spy()
-
-        self.picker_position = random.choice(self.truth_talk_db)
+    # def play(self, users, line):
+    #     self.users = users
+    #     if len(self.users) is None:
+    #         line.reply("沒有玩家oops")
+    #     print("user count=", len(users))
+    #     user_count = len(users)
+    #     tod_count = int(user_count / 3)
+    #     if tod_count == 0:
+    #         tod_count = 1
+    #     self.tod_users = []
+    #     for i in range(tod_count):
+    #         self.picker_spy()
+    #
+    #     self.picker_position = random.choice(self.truth_talk_db)
 
     def random_user(self, line):
         self.speical_man = choose_list(self.users, 1)[0]
         line.reply('the man is {}'.format(self.speical_man["display_name"]))
 
-    def finelcode_user(self, line, event):
-        # while True:
-        #     msg = choose_user(user_list)
-        #     if msg == "break":
-        #         break
-        pass
+    def finelcode_user(self,line, us_name, pw_head, pw_tail, pw):
+        self.picker_position = random.choice(self.truth_talk_db)
+
+        cp.p(us_name + "請輸入密碼: ", cp.colors.red)
+        input_msg = input()
+
+        while True:
+            if int(input_msg) > pw_head and int(input_msg) < pw_tail:
+                return int(input_msg)
+            elif int(input_msg) == pw:
+                self.speical_man = self.users
+            else:
+                print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
+                cp.p(us_name + "請輸入密碼: ", cp.colors.red)
+                input_msg = input()
+
 
 
     def truth_talk(self, line, event):
@@ -89,3 +99,5 @@ class TodGame(db.Model):
             line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position[random.choice(range(0, 9))]))
             return True
         #     line.push(event.source.group_id, "say adventure")
+
+
