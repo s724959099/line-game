@@ -4,7 +4,6 @@ from games.spy_game.game import SpyGame
 from games.tod_game.game import TodGame
 
 
-
 class GameRoom(db.Model):
     FILE = __file__
 
@@ -27,8 +26,8 @@ class GameRoom(db.Model):
         return True
 
     def in_users(self, user_id):
-        for item in self.users:
-            if item["user_id"] == user_id:
+        for profile in self.users:
+            if profile["user_id"] == user_id:
                 return True
         return False
 
@@ -87,10 +86,14 @@ class GameDB(db.Model):
 
         return self.__search_group(group_id, wrapper)
 
-    def __search_group(self, group_id, fn):
+    def __search_group(self, get_id, fn, id_type="group"):
         for room in self.rooms:
-            if room.group_id == group_id:
-                return fn(room)
+            if id_type == "group":
+                if room.group_id == get_id:
+                    return fn(room)
+            else:
+                if room.in_users(get_id):
+                    return fn(room)
 
     def in_group(self, group_id):
         def wrapper(room):
@@ -114,11 +117,11 @@ class GameDB(db.Model):
 
         return self.__search_group(group_id, wrapper)
 
-    def get_room(self, group_id):
+    def get_room(self, group_id,id_type="group"):
         def wrapper(room):
             return room
 
-        return self.__search_group(group_id, wrapper)
+        return self.__search_group(group_id, wrapper,id_type)
 
     def show_display_player(self):
         def wrapper(room):
