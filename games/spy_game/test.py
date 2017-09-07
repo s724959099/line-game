@@ -23,3 +23,4 @@ if __name__ == "__main__":
     user_list[0].speak("重新開始", message_type=User.message_type.user)
     user_list[0].speak("重新開始", message_type=User.message_type.user)
     user_list[0].speak("結束遊戲")
+
