@@ -27,7 +27,6 @@ class TodGame(db.Model):
             "最想感謝的人跟為什麼",
             "未來的夢想",
             "如果時間能重來最想做什麼",
-            # "破處了嗎",
 
         ],
         self.adventure_db = [
@@ -49,8 +48,13 @@ class TodGame(db.Model):
         self.speical_man = choose_list(self.users, 1)[0]
         line.reply('the man is {}'.format(self.speical_man["display_name"]))
 
-    def finelcode_user(self, line, pw_head, pw_tail, pw):
-        cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+    def finelcode_user(self, line,user , pw_head, pw_tail, pw):
+        # print("range {0}-{1}".format(pw_head, pw_tail))
+        line.reply("range {0}-{1}".format(pw_head, pw_tail))
+
+        # cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+        line.reply(user['display_name'] + "請輸入密碼：" )
+
         input_msg = input()
 
         while True:
@@ -63,21 +67,30 @@ class TodGame(db.Model):
                     self.speical_man = line.profile
                     return int(input_msg)
                 else:
-                    print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
-                    cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+                    # print("Please input number({}-{})!!!!".format(pw_head, pw_tail))
+                    line.reply("Please input number({}-{})!!!!".format(pw_head, pw_tail))
+
+                    # cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+                    line.reply(user['display_name'] + "請輸入密碼：")
                     input_msg = input()
 
             else:
-                print("Please can only input number \n range({}-{})!!!!".format(pw_head, pw_tail))
-                cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+                # print("Please can only input number \n range({}-{})!!!!".format(pw_head, pw_tail))
+                line.reply("Please can only input number \n range({}-{})!!!!".format(pw_head, pw_tail))
+
+                # cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
+                line.reply(user['display_name'] + "請輸入密碼：")
+
                 input_msg = input()
 
 
 
     def truth_talk(self, line, event):
-        self.picker_position = random.choice(self.truth_talk_db)
+        # self.picker_position = random.choice(self.truth_talk_db)
+        self.picker_position = random.choice(self.truth_talk_db[0])
 
         if event.source.user_id == self.speical_man["user_id"]:
+            # line.push(event.source.group_id, text_message("Ｑ：" + random.choice(self.picker_position)))
             line.push(event.source.group_id, text_message("Ｑ：" + self.picker_position))
             return True
             # line.push(event.source.group_id,"say truth")
