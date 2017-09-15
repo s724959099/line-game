@@ -48,12 +48,12 @@ class TodGame(db.Model):
         self.speical_man = choose_list(self.users, 1)[0]
         line.reply('the man is {}'.format(self.speical_man["display_name"]))
 
-    def finelcode_user(self, line,user , pw_head, pw_tail, pw):
+    def finelcode_user(self, line, user , pw_head, pw_tail, pw):
         # print("range {0}-{1}".format(pw_head, pw_tail))
         line.reply("range {0}-{1}".format(pw_head, pw_tail))
 
         # cp.p(line.profile["display_name"] + "請輸入密碼: ", cp.colors.red)
-        line.reply(user['display_name'] + "請輸入密碼：" )
+        line.reply("{} 請輸入密碼：".format(user["display_name"]) )
 
         input_msg = input()
 
