@@ -53,6 +53,9 @@ def restart_gmae(line, event, game_db):
 
 def finelcode(line, event, game_db, pw=None):
     room = game_db.get_room(event.source.group_id)
+    if not room.users:
+        line.reply("目前還沒有人加入遊戲唷")
+        return
     game = room.game
     # game.users = room.users[:]
     # game.random_user(line)
@@ -68,9 +71,8 @@ def finelcode(line, event, game_db, pw=None):
 
     while fipw != msg:
 
-        for i in user_list:
-            print("range {0}-{1}".format(pw_head, pw_tail))
-            msg = game.finelcode_user(i, pw_head, pw_tail, fipw)
+        for i in room.users:
+            msg = game.finelcode_user(line,i , pw_head, pw_tail, fipw)
 
             if msg == fipw:
                 print("Boom\nWin '{}'".format(i.profile["display_name"]))
