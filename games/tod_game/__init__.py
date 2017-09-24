@@ -3,7 +3,7 @@ from games.tod_game.game import TodGame
 from games.game_enviroment import *
 
 import random
-
+import re
 
 def template(title, msg, messages):
     url = 'https://i.imgur.com/K9R7i8R.jpg'
@@ -24,8 +24,7 @@ def to_start(line, event, game_db):
 
 def random_peo(line, event, game_db):
     room = game_db.get_room(event.source.group_id)
-    if not room.users:
-        line.reply("目前還沒有人進入遊戲喲！")
+
     game = room.game
     game.users = room.users[:]
     game.random_user(line)
@@ -51,38 +50,42 @@ def restart_gmae(line, event, game_db):
     to_start(line, event, game_db)
 
 
-def finelcode(line, event, game_db, pw=None):
+def finalcode(line, event, game_db, pw=None):
     room = game_db.get_room(event.source.group_id)
-    if not room.users:
-        line.reply("目前還沒有人加入遊戲唷")
-        return
+
+    game = room.game
+
+    tod_game.finelcode_user()
+
+
+    # game.users = room.users[:]
+    # game.random_user(line)
+
+
+
+
+
+
+
+def final_pw(line, event, game_db, pw=None):
+    room = game_db.get_room(event.source.group_id)
+
     game = room.game
     # game.users = room.users[:]
     # game.random_user(line)
 
-    fipw = random.randint(1, 99)
-
-    pw_head = 0
-    pw_tail = 100
-    msg = 0
-    # random.sample(range(10), 10)
-    # random.randint(0, 99)
 
 
-    while fipw != msg:
+    if(tod_game.finel_pw(line, event))
 
-        for i in room.users:
-            msg = game.finelcode_user(line,i , pw_head, pw_tail, fipw)
-
-            if msg == fipw:
-                print("Boom\nWin '{}'".format(i.profile["display_name"]))
-            elif msg<fipw:
-                pw_head = msg
-            elif msg>fipw:
-                pw_tail = msg
-
-            if msg == fipw: break
-
+        line.push(event.source.group_id, template(
+            "title",
+            "msg",
+            messages=[
+                "真心話",
+                "大冒險"
+            ]
+        ))
 
 
 def true_talk(line, event, game_db):
@@ -125,15 +128,22 @@ def game_lobby(line, event, game_db):
 
 
 def commands():
+
+
     return [
-        SimpleCommandFactory(to_start, "OK"),
 
-        SimpleCommandFactory(random_peo, "電腦隨機"),
-        SimpleCommandFactory(finelcode, "終極密碼"),
-        SimpleCommandFactory(true_talk, "真心話"),
-        SimpleCommandFactory(adventure, "大冒險"),
+        SimpleCommandFactory(to_start, "OK"), #1
+        SimpleCommandFactory(restart_gmae, "重新開始"),  # 1
 
-        SimpleCommandFactory(restart_gmae, "重新開始"),
-        SimpleCommandFactory(end_gmae, "結束遊戲"),
-        SimpleCommandFactory(game_lobby, "遊戲大廳"),
+        SimpleCommandFactory(random_peo, "電腦隨機"),  #2
+        SimpleCommandFactory(finalcode, "終極密碼"),   #2
+        SimpleCommandFactory(final_pw, no_if=True), #3
+        SimpleCommandFactory(true_talk, "真心話"), #4
+        SimpleCommandFactory(adventure, "大冒險"), #4
+
+
+        SimpleCommandFactory(end_gmae, "結束遊戲"), #5
+        SimpleCommandFactory(game_lobby, "遊戲大廳"), #
     ]
+
+
