@@ -3,6 +3,7 @@ from games.spy_game.game import SpyGame
 from games.tod_game.game import TodGame
 from games.woof_game.game import WoofGame
 
+import re
 
 def template(title, msg, messages):
     url = 'https://i.imgur.com/yREmWQb.jpg'

@@ -38,4 +38,4 @@ if __name__ == "__main__":
     from utli import db
 
     db.write_json({})
-    app.run(port=7000, debug=True)
+    app.run(port=8080, debug=True)
