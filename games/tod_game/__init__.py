@@ -49,7 +49,7 @@ def choose_game(line, event, game_db):
     if event.message.text == "電腦隨機":
         game.choose_loser(line)
     if event.message.text == "終極密碼":
-        game.to_final_game()
+        game.to_final_game(line,event)
 
 
 def game_lobby(line, event, game_db):

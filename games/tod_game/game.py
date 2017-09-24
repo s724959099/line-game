@@ -69,9 +69,15 @@ class TodGame(db.Model):
             ))
             self.status = Status.game_over
 
-    def to_final_game(self):
+    def to_final_game(self,line,event):
         self.status = Status.in_final_code
         self.boom = random.randint(1, 99)
+        self.push_range(line,event)
+
+    def push_range(self,line,event):
+        line.push(event.source.group_id, "{} - {}".format(
+            self.pw_head, self.pw_tail
+        ))
 
     def __in_range(self, count):
         return self.pw_head < count < self.pw_tail
