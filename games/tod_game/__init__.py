@@ -26,7 +26,19 @@ def end_gmae(line, event, game_db):
 def in_final_code(line, event, game_db):
     room = game_db.get_room(event.source.group_id)
     game = room.game
-    game.in_final_code(line,event)
+
+    if (game.in_final_code(line,event)):
+        line.push(event.source.group_id, template(
+            "懲罰時間",
+            "二選一",
+            messages=[
+                "真心話",
+                "大冒險"
+            ]
+        ))
+
+
+
 
 
 def start_game(line, event, game_db):
@@ -34,8 +46,8 @@ def start_game(line, event, game_db):
     game = room.game
     game.start_game(room.users[:])
     line.push(event.source.group_id, template(
-        "title",
-        "msg",
+        "抽出一位玩家",
+        "二選一",
         messages=[
             "電腦隨機",
             "終極密碼"
@@ -47,9 +59,20 @@ def choose_game(line, event, game_db):
     room = game_db.get_room(event.source.group_id)
     game = room.game
     if event.message.text == "電腦隨機":
-        game.choose_loser(line)
+        game.choose_loser(line, event)
+
+        line.push(event.source.group_id, template(
+            "懲罰時間",
+            "二選一",
+            messages=[
+                "真心話",
+                "大冒險"
+            ]
+        ))
+
     if event.message.text == "終極密碼":
         game.to_final_game(line,event)
+
 
 
 def game_lobby(line, event, game_db):
@@ -75,7 +98,7 @@ def commands():
 
         SimpleCommandFactory(choose_game, "電腦隨機"),  # 2
         SimpleCommandFactory(choose_game, "終極密碼"),  # 2
-        SimpleCommandFactory(in_final_code, no_if=True),  # 3
+        SimpleCommandFactory(in_final_code,"" ,no_if = True),  # 3
         SimpleCommandFactory(choose_punishment, "真心話"),  # 4
         SimpleCommandFactory(choose_punishment, "大冒險"),  # 4
 

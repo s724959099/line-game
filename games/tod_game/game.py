@@ -45,27 +45,26 @@ class TodGame(db.Model):
         self.users = []
         self.loser = None
 
-        self.fipw = random.randint(1, 99)
+        # self.fipw = random.randint(1, 99)
         self.pw_head = 0
         self.pw_tail = 100
         self.boom = None
 
         # 遊戲狀態
         self.status = Status.choose_game
-        self.reply_index = 0
+        self.reply_user = 0
 
-        # 單純覺得很擾亂我而已所以把他移上去因為不常看到
         # 真心話
-        self.truth_talk_db = adventure_db
+        self.truth_talk_db = truth_talk_db
         # 大冒險
         self.adventure_db = adventure_db
 
-    def choose_loser(self, line):
+    def choose_loser(self, line, event):
         if self.status == Status.choose_game:
             # 跳過遊戲 直接從狀態2變成4
             self.loser = random.choice(self.users)
             line.push(event.source.group_id, "{} lose".format(
-                loser["display_name"]
+                self.loser["display_name"]
             ))
             self.status = Status.game_over
 
@@ -75,33 +74,45 @@ class TodGame(db.Model):
         self.push_range(line,event)
 
     def push_range(self,line,event):
-        line.push(event.source.group_id, "{} - {}".format(
-            self.pw_head, self.pw_tail
+        line.push(event.source.group_id, "{} Please input：{} - {}".format(
+            self.users[self.reply_user]['display_name'], self.pw_head, self.pw_tail
         ))
 
     def __in_range(self, count):
-        return self.pw_head < count < self.pw_tail
+        return self.pw_head < int(count) < self.pw_tail
 
     def in_final_code(self, line, event):
         if self.status == Status.in_final_code:
             input_msg = event.message.text
-            if re.compile(r'^[0-9]+$').match(input_msg):
-                if not self.__in_range(input_msg):
-                    line.push(event.source.group_id, "請輸入範圍內數字")
-                else:
-                    if self.boom == input_msg:
-                        line.push(event.source.group_id, "你輸了")
-                        self.status = Status.game_over
+            if event.source.user_id == self.users[self.reply_user]['user_id'] and input_msg != "終極密碼":
+                if re.compile(r'^[0-9]+$').match(input_msg):
+                    if not self.__in_range(input_msg):
+                        line.push(event.source.group_id, "{} Pleas input range {} - {}".format(self.users[self.reply_user]["display_name"], self.pw_head, self.pw_tail))
                     else:
-                        temp = self.pw_head
-                        self.pw_head = input_msg
-                        if not self.__in_range(self.boom):
-                            self.pw_head = temp
-                            self.pw_tail = input_msg
+                        if self.boom == int(input_msg):
+                            line.push(event.source.group_id, "Boom!!!! \n{} is losers".format(
+                                self.users[0]["display_name"]
+                            ))
 
-                        line.push(event.source.group_id, "{} - {}".format(
-                            self.pw_head, self.pw_tail
-                        ))
+                            self.status = Status.game_over
+                            return True
+
+                        else:
+                            temp = self.pw_head
+                            self.pw_head = int(input_msg)
+                            if not self.__in_range(self.boom):
+                                self.pw_head = temp
+                                self.pw_tail = int(input_msg)
+
+                            if len(self.users)-1 > self.reply_user:
+                                self.reply_user +=1
+                            else:
+                                self.reply_user =0
+
+                            self.push_range(line, event)
+                else:
+                    line.push(event.source.group_id, "Pleas input number")
+
 
     def is_game_over(self):
         return self.status == Status.game_over
@@ -115,7 +126,8 @@ class TodGame(db.Model):
             '真心話': 'truth_talk_db',
             '大冒險': 'adventure_db',
         }
-        if choice_list.get(choice) is not None and self.status == Status.game_over:
+        # if choice_list.get(choice) is not None and self.status == Status.game_over:
+        if choice in choice_list is not None and self.status == Status.game_over:
             punishment_list = getattr(self, choice_list.get(choice))
-            line.push(event.source.group_id, punishment_list.choice())
+            line.push(event.source.group_id, 'Q：{}'.format(random.choice(punishment_list)))
             self.status = Status.game_end
