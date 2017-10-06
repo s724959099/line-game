@@ -46,4 +46,5 @@ def commands():
         SimpleCommandFactory(to_start, "OK"),
         SimpleCommandFactory(end_gmae, "結束遊戲"),
         SimpleCommandFactory(restart_gmae, "重新開始", only_group=False),
+
     ]

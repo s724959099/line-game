@@ -93,4 +93,7 @@ def commands():
         SimpleCommandFactory(get_user, "我"),
         SimpleCommandFactory(show_game_player, "遊戲人數"),
         SimpleCommandFactory(just_records_message, "test"),
+
+
+
     ]
