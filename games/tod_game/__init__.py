@@ -98,7 +98,7 @@ def commands():
 
         SimpleCommandFactory(choose_game, "電腦隨機"),  # 2
         SimpleCommandFactory(choose_game, "終極密碼"),  # 2
-        SimpleCommandFactory(in_final_code ,no_if = True),  # 3
+        SimpleCommandFactory(in_final_code, "" , no_if = True),  # 3
         SimpleCommandFactory(choose_punishment, "真心話"),  # 4
         SimpleCommandFactory(choose_punishment, "大冒險"),  # 4
 
